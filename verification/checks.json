@@ -1,0 +1,12 @@
+{
+  "status": "All three reference devices passed one end-to-end evaluation each; eight unit tests passed. Two additional process-only samples passed.",
+  "dataset_status": "The 100-point-per-device qualification runs have NOT been executed.",
+  "calibration_status": "Illustrative reduced models; not calibrated or mesh-convergence certified.",
+  "versions": {
+    "ViennaPS": "4.7.0",
+    "devsim": "2.11.0",
+    "numpy": "2.2.6",
+    "scipy": "1.17.1"
+  },
+  "date": "2026-11-03"
+}

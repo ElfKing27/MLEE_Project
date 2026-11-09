@@ -1,7 +1,5 @@
-numpy
-scipy
-matplotlib
-scikit-learn
-torch
-botorch
-gpytorch
+numpy==2.2.6
+scipy==1.17.1
+ViennaPS==4.7.0
+devsim==2.11.0
+# Windows DEVSIM also needs a working BLAS/LAPACK runtime (e.g. Intel MKL).

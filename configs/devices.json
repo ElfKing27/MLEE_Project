@@ -1,0 +1,20 @@
+{
+  "description": "Illustrative reduced planar silicon nMOS benchmarks, not calibrated technology models. One blanket boron threshold-adjust implant before idealized S/D formation.",
+  "defaults": {
+    "process": {"grid_nm": 5.0, "implant_energy_keV": 10},
+    "geometry": {"source_drain_extension_nm": 300, "substrate_depth_nm": 800, "mesh_refinement": 1},
+    "fixed": {"substrate_doping_cm3": 3000000000000000, "source_drain_doping_cm3": 1e19, "body_contact_doping_cm3": 1e18, "source_drain_depth_nm": 100, "source_drain_lateral_nm": 20, "source_drain_vertical_nm": 20, "gate_work_function_eV": 4.1},
+    "electrical": {"target_vth_V": 0.5, "leakage_limit_A_per_um": 1e-12, "off_drain_voltage_V": 1.0, "threshold_drain_voltage_V": 0.05, "gate_sweep_max_V": 4.0, "gate_sweep_points": 41, "threshold_current_A_per_um_times_L_um": 1e-7, "relative_tolerance": 1e-5},
+    "hard_bounds": {"implant_dose_cm2": [1e11, 1e13], "anneal_time_s": [5.0, 120.0], "anneal_temperature_C": [1000.0, 1100.0]},
+    "domain_candidates": [
+      {"name": "broad", "implant_dose_cm2": [1e11, 1e13], "anneal_time_s": [5, 120], "anneal_temperature_C": [1000, 1100]},
+      {"name": "low_dose", "implant_dose_cm2": [1e11, 1e12], "anneal_time_s": [5, 120], "anneal_temperature_C": [1000, 1100]},
+      {"name": "intermediate_dose", "implant_dose_cm2": [3e11, 3e12], "anneal_time_s": [10, 90], "anneal_temperature_C": [1000, 1080]}
+    ]
+  },
+  "devices": [
+    {"id": "planar_L500_tox10", "geometry": {"gate_length_nm": 500, "oxide_thickness_nm": 10}},
+    {"id": "planar_L1000_tox15", "geometry": {"gate_length_nm": 1000, "oxide_thickness_nm": 15}},
+    {"id": "planar_L2000_tox20", "geometry": {"gate_length_nm": 2000, "oxide_thickness_nm": 20}}
+  ]
+}

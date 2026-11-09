@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/ViennaTools/ViennaPS",
+  "commit": "f65c1dce102cf4c92769f3bf8a22fb1f6d933abe",
+  "files": [
+    {
+      "path": "implant/boron_in_silicon_crystalline.csv",
+      "sha256": "a4aa74144453a2a5c0a98ca4719d11a859080aebb08b0d558a9734cec0e67d10"
+    },
+    {
+      "path": "anneal/annealing.csv",
+      "sha256": "b5759d485b6459b4a3ee6b85f3f8828079dab3a0e78504773bf93cfa3dc863c0"
+    }
+  ]
+}
