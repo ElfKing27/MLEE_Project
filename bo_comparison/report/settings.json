@@ -1,0 +1,193 @@
+{
+  "study": {
+    "betas": [
+      3.0,
+      2.0,
+      1.0
+    ],
+    "budgets": [
+      50,
+      100
+    ],
+    "runs_per_device": 30,
+    "datasets": [
+      {
+        "device": "planar_L1000_tox15",
+        "sha256": "7639b29858865beae0f062f66bda3404da02cfd5b661c59a8d8aa9b60a6484da"
+      },
+      {
+        "device": "planar_L2000_tox20",
+        "sha256": "87104582f13807460104d8caa29c21d02de56445ca8b943c288a6f7568467e46"
+      },
+      {
+        "device": "planar_L500_tox10",
+        "sha256": "3825db4c57b1570f5b09d36cc589a155e7fe8bf37d1c375c4d58d868b6ed891c"
+      }
+    ],
+    "baseline_prefix_checked": true,
+    "scoring": "50-query prefixes and full 100-query traces of the same policies",
+    "beta_meaning": "Direct standard-deviation multiplier on GP confidence bounds",
+    "repeats": "Allowed for both methods; every query costs one budget unit",
+    "settings": "All other parameters match the original fixed-GP experiment",
+    "uncertainty": "Paired bootstrap over initial seed choices on fixed datasets",
+    "source_sha256": "6922f4e7ef78fed833350dd1acd2b4c1f14b95a4e1b550195e73761bde1e0cb3"
+  },
+  "experiment_manifests": {
+    "3": {
+      "settings": {
+        "runs": 30,
+        "budget": 100,
+        "initial_safe": 3,
+        "seed": 20261126,
+        "beta": 3.0,
+        "length_scale": 0.4,
+        "objective_scale": 0.25,
+        "safety_scale": 10.0,
+        "noise_variance": 1e-06
+      },
+      "datasets": [
+        {
+          "device": "planar_L1000_tox15",
+          "sha256": "7639b29858865beae0f062f66bda3404da02cfd5b661c59a8d8aa9b60a6484da",
+          "recipes": 100,
+          "safe": 50,
+          "unsafe": 50
+        },
+        {
+          "device": "planar_L2000_tox20",
+          "sha256": "87104582f13807460104d8caa29c21d02de56445ca8b943c288a6f7568467e46",
+          "recipes": 100,
+          "safe": 42,
+          "unsafe": 58
+        },
+        {
+          "device": "planar_L500_tox10",
+          "sha256": "3825db4c57b1570f5b09d36cc589a155e7fe8bf37d1c375c4d58d868b6ed891c",
+          "recipes": 100,
+          "safe": 32,
+          "unsafe": 68
+        }
+      ],
+      "versions": {
+        "python": "3.12.9",
+        "numpy": "2.2.6",
+        "scipy": "1.17.1",
+        "scikit-learn": "1.9.1"
+      },
+      "source_sha256": {
+        "algorithms.py": "17837c4e6438deca2e3bd4f81321807675e8764689c4148080ee213447dd8469",
+        "run_experiment.py": "44a05b324f21189edb1d5233007c5fddf0da1fc8dc76c7fefa19c6f28dff5bdf"
+      },
+      "domain": "100-point finite pools, no interpolation or TCAD calls",
+      "initialization": "Uniform random choice from known-safe pool rows, shared within pair",
+      "models": "Fixed Matern 5/2, no response-based hyperparameter tuning",
+      "safety_confidence": "Empirical beta multiplier, no formal no-fail guarantee",
+      "query_policy": "Both methods may repeat recipes; every query including repeats and seeds costs one budget unit",
+      "regret": "Best-safe gap and its cumulative sum, not cumulative queried-point regret"
+    },
+    "2": {
+      "settings": {
+        "runs": 30,
+        "budget": 100,
+        "initial_safe": 3,
+        "seed": 20261126,
+        "beta": 2.0,
+        "length_scale": 0.4,
+        "objective_scale": 0.25,
+        "safety_scale": 10.0,
+        "noise_variance": 1e-06
+      },
+      "datasets": [
+        {
+          "device": "planar_L1000_tox15",
+          "sha256": "7639b29858865beae0f062f66bda3404da02cfd5b661c59a8d8aa9b60a6484da",
+          "recipes": 100,
+          "safe": 50,
+          "unsafe": 50
+        },
+        {
+          "device": "planar_L2000_tox20",
+          "sha256": "87104582f13807460104d8caa29c21d02de56445ca8b943c288a6f7568467e46",
+          "recipes": 100,
+          "safe": 42,
+          "unsafe": 58
+        },
+        {
+          "device": "planar_L500_tox10",
+          "sha256": "3825db4c57b1570f5b09d36cc589a155e7fe8bf37d1c375c4d58d868b6ed891c",
+          "recipes": 100,
+          "safe": 32,
+          "unsafe": 68
+        }
+      ],
+      "versions": {
+        "python": "3.12.9",
+        "numpy": "2.2.6",
+        "scipy": "1.17.1",
+        "scikit-learn": "1.9.1"
+      },
+      "source_sha256": {
+        "algorithms.py": "17837c4e6438deca2e3bd4f81321807675e8764689c4148080ee213447dd8469",
+        "run_experiment.py": "44a05b324f21189edb1d5233007c5fddf0da1fc8dc76c7fefa19c6f28dff5bdf"
+      },
+      "domain": "100-point finite pools, no interpolation or TCAD calls",
+      "initialization": "Uniform random choice from known-safe pool rows, shared within pair",
+      "models": "Fixed Matern 5/2, no response-based hyperparameter tuning",
+      "safety_confidence": "Empirical beta multiplier, no formal no-fail guarantee",
+      "query_policy": "Both methods may repeat recipes; every query including repeats and seeds costs one budget unit",
+      "regret": "Best-safe gap and its cumulative sum, not cumulative queried-point regret"
+    },
+    "1": {
+      "settings": {
+        "runs": 30,
+        "budget": 100,
+        "initial_safe": 3,
+        "seed": 20261126,
+        "beta": 1.0,
+        "length_scale": 0.4,
+        "objective_scale": 0.25,
+        "safety_scale": 10.0,
+        "noise_variance": 1e-06
+      },
+      "datasets": [
+        {
+          "device": "planar_L1000_tox15",
+          "sha256": "7639b29858865beae0f062f66bda3404da02cfd5b661c59a8d8aa9b60a6484da",
+          "recipes": 100,
+          "safe": 50,
+          "unsafe": 50
+        },
+        {
+          "device": "planar_L2000_tox20",
+          "sha256": "87104582f13807460104d8caa29c21d02de56445ca8b943c288a6f7568467e46",
+          "recipes": 100,
+          "safe": 42,
+          "unsafe": 58
+        },
+        {
+          "device": "planar_L500_tox10",
+          "sha256": "3825db4c57b1570f5b09d36cc589a155e7fe8bf37d1c375c4d58d868b6ed891c",
+          "recipes": 100,
+          "safe": 32,
+          "unsafe": 68
+        }
+      ],
+      "versions": {
+        "python": "3.12.9",
+        "numpy": "2.2.6",
+        "scipy": "1.17.1",
+        "scikit-learn": "1.9.1"
+      },
+      "source_sha256": {
+        "algorithms.py": "17837c4e6438deca2e3bd4f81321807675e8764689c4148080ee213447dd8469",
+        "run_experiment.py": "44a05b324f21189edb1d5233007c5fddf0da1fc8dc76c7fefa19c6f28dff5bdf"
+      },
+      "domain": "100-point finite pools, no interpolation or TCAD calls",
+      "initialization": "Uniform random choice from known-safe pool rows, shared within pair",
+      "models": "Fixed Matern 5/2, no response-based hyperparameter tuning",
+      "safety_confidence": "Empirical beta multiplier, no formal no-fail guarantee",
+      "query_policy": "Both methods may repeat recipes; every query including repeats and seeds costs one budget unit",
+      "regret": "Best-safe gap and its cumulative sum, not cumulative queried-point regret"
+    }
+  }
+}

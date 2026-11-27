@@ -12,7 +12,10 @@ an individual CSV. Pilot and final samples remain separate views.
 
 - Drag the handles on the dose, time, and temperature sliders to choose a range.
   Dose uses log10 units: 12 means 10^12 cm^-2.
-- Change the axes or choose All, Safe, Unsafe, or Unknown.
+- The three recipe plots show dose versus time, dose versus temperature, and
+  time versus temperature together. All filters apply to all five plots.
+- Change the horizontal axis of the two electrical plots, or choose All, Safe,
+  Unsafe, or Unknown to filter points by safety.
 - Click a point to see its recipe, threshold voltage, leakage, and safety margin.
 - Previous and Next switch devices or phases. Reset clears filters; Reload CSVs
   reads a fresh snapshot and resets filters without restarting the generator.

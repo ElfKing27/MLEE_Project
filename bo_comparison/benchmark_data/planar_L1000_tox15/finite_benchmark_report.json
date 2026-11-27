@@ -1,0 +1,32 @@
+{
+  "device_id": "planar_L1000_tox15",
+  "benchmark_type": "finite_candidate_pool",
+  "accepted": true,
+  "statistics": {
+    "n": 100,
+    "unsafe": 50,
+    "safe": 50,
+    "unknown": 0,
+    "observed_unsafe_fraction": 0.5
+  },
+  "sources": {
+    "pilot_recipes": 72,
+    "new_complete_recipes": 28,
+    "topup_attempts": 28
+  },
+  "topup_bounds": {
+    "implant_dose_cm2": [
+      100000000000.0,
+      10000000000000.0
+    ],
+    "anneal_time_s": [
+      5.0,
+      120.0
+    ],
+    "anneal_temperature_C": [
+      1000.0,
+      1100.0
+    ]
+  },
+  "scope": "Exact count on this finite pool; no claim about continuous design-space volume."
+}

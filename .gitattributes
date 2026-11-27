@@ -1,0 +1,11 @@
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf
+*.png binary
+
+# Keep original simulation CSV bytes so provenance hashes survive a clone.
+bo_comparison/benchmark_data/** -text whitespace=cr-at-eol
+.gitattributes text eol=lf
+.gitignore text eol=lf

@@ -46,6 +46,7 @@ def fmt(value):
 class RecipeViewer:
     def __init__(self, plt, source, include_pilots):
         from matplotlib.widgets import Button, RadioButtons, RangeSlider
+        from matplotlib.lines import Line2D
 
         self.source, self.include_pilots = source, include_pilots
         self.views = load_views(source, include_pilots)
@@ -54,23 +55,33 @@ class RecipeViewer:
         self.sliders = {}
         self.updating = False
         self.RangeSlider = RangeSlider
-        self.fig = plt.figure(figsize=(14, 8.7), facecolor="#f3f7f8")
+        self.fig = plt.figure(figsize=(14, 9.6), facecolor="#f3f7f8")
         manager = self.fig.canvas.manager
         if manager is not None:
             manager.set_window_title("NMOS recipe explorer")
         self.fig.text(.06, .955, "NMOS recipe explorer", fontsize=21, weight="bold", color="#18313b")
         self.subtitle = self.fig.text(.06, .917, "", fontsize=11, color="#314b56")
         self.counts = self.fig.text(.06, .885, "", fontsize=10, color="#314b56")
-        self.space = self.fig.add_axes((.075, .395, .434, .449))
-        self.vth = self.fig.add_axes((.605, .658, .362, .186))
-        self.leakage = self.fig.add_axes((.605, .395, .362, .18))
+        self.recipe_plots = [
+            (self.fig.add_axes((left, .627, .238, .214)), x, y, title)
+            for left, x, y, title in (
+                (.073, INPUTS[0], INPUTS[1], "Dose and anneal time"),
+                (.397, INPUTS[0], INPUTS[2], "Dose and anneal temperature"),
+                (.721, INPUTS[1], INPUTS[2], "Anneal time and temperature"),
+            )
+        ]
+        self.fig.legend(handles=[Line2D([], [], marker=marker, color=color, linestyle="none",
+                                       label=status.capitalize()) for status, (color, marker) in STYLES.items()],
+                        loc="upper right", bbox_to_anchor=(.968, .906), ncol=3, frameon=False, fontsize=9)
+        self.vth = self.fig.add_axes((.073, .362, .421, .179))
+        self.leakage = self.fig.add_axes((.567, .362, .392, .179))
         self.detail = self.fig.text(.06, .046, "", fontsize=10, color="#18313b", linespacing=1.6)
-        self.filter_axes = [self.fig.add_axes((.17, y, .275, .024)) for y in (.292, .226, .16)]
-        self.status = RadioButtons(self.fig.add_axes((.555, .137, .124, .179)),
+        self.filter_axes = [self.fig.add_axes((.17, y, .275, .022)) for y in (.259, .202, .145)]
+        self.status = RadioButtons(self.fig.add_axes((.555, .123, .124, .16)),
                                    ("All", "Safe", "Unsafe", "Unknown"), useblit=False)
-        self.x = RadioButtons(self.fig.add_axes((.707, .137, .112, .179)), SHORT, useblit=False)
-        self.y = RadioButtons(self.fig.add_axes((.847, .137, .112, .179)), SHORT, active=2, useblit=False)
-        for control, label in ((self.status, "Safety filter"), (self.x, "Horizontal axis"), (self.y, "Recipe-space Y")):
+        self.x = RadioButtons(self.fig.add_axes((.715, .123, .125, .16)), SHORT, useblit=False)
+        self.fig.text(.865, .221, "Click any point\nto highlight it\nin all five plots.", fontsize=9, color="#314b56", va="top")
+        for control, label in ((self.status, "Safety filter"), (self.x, "Electrical plots: X")):
             control.ax.set_title(label, fontsize=10, loc="left", pad=7)
             control.on_clicked(self.render)
         buttons = [(.598, "Previous", lambda _: self.move(-1)), (.696, "Next", lambda _: self.move(1)),
@@ -144,7 +155,7 @@ class RecipeViewer:
             self.selected = indices[int(event.ind[0])]
             self.render()
 
-    def plot(self, ax, indices, x, y, title, ref_key=None, ref_label=None):
+    def plot(self, ax, indices, x, y, title, ref_key=None, ref_label=None, *, show_legend=True):
         ax.clear()
         rows = self.data["rows"]
         valid = [i for i in indices if all(rows[i][key] is not None and
@@ -176,19 +187,13 @@ class RecipeViewer:
         if len(valid) < len(indices):
             ax.text(.99, .02, f"{len(indices)-len(valid)} omitted", transform=ax.transAxes,
                     ha="right", va="bottom", fontsize=8, color="#526671")
-        if ax.get_legend_handles_labels()[0]:
+        if show_legend and ax.get_legend_handles_labels()[0]:
             ax.legend(loc="best", fontsize=8, framealpha=.9)
 
     def render(self, _=None):
         if self.updating:
             return
-        x_index, y_index = SHORT.index(self.x.value_selected), SHORT.index(self.y.value_selected)
-        if x_index == y_index:
-            y_index = (x_index + 1) % len(INPUTS)
-            self.updating = True
-            self.y.set_active(y_index)
-            self.updating = False
-        x, y = INPUTS[x_index], INPUTS[y_index]
+        x = INPUTS[SHORT.index(self.x.value_selected)]
         indices = self.visible_indices()
         if self.selected not in indices:
             self.selected = indices[0] if indices else None
@@ -198,7 +203,8 @@ class RecipeViewer:
         self.counts.set_text(f"View {self.index+1}/{len(self.views)}  ·  {len(indices)}/{len(rows)} shown  ·  "
                              f"{counts['safe']} safe  ·  {counts['unsafe']} unsafe  ·  {counts['unknown']} unknown")
         self.artists = {}
-        self.plot(self.space, indices, x, y, "Sampled recipe space")
+        for ax, horizontal, vertical, title in self.recipe_plots:
+            self.plot(ax, indices, horizontal, vertical, title, show_legend=False)
         self.plot(self.vth, indices, x, "vth_V", "Threshold voltage", "target_vth_V", "Target")
         self.plot(self.leakage, indices, x, "ioff_A_per_um", "Off-state leakage", "leakage_limit_A_per_um", "Limit")
         if self.selected is None:

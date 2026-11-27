@@ -3,3 +3,7 @@ __pycache__/
 .venv/
 outputs*/
 tmp/
+
+# Detailed optimizer traces are reproducible and stay local.
+bo_comparison/results_equal_budget/
+bo_comparison/sensitivity/

@@ -1,7 +1,12 @@
 # Planar nMOS process/device benchmark dataset
 
-Generate approximately 100 evaluated recipes **per device**, before comparing EI
-and SafeOpt. This repository builds the dataset; it does not implement BO.
+Generate approximately 100 evaluated recipes **per device**, then compare
+expected-improvement BO and SafeOpt using the saved simulation outcomes.
+
+The completed [comparison report](bo_comparison/report/README.md) includes
+recipe quality, violations, exploration counts and budget/confidence sensitivity.
+The optimizer study is a finite-pool numerical benchmark. It measures the
+safety-performance trade-off, with nominal query accounting and fixed GP settings.
 
 ## What is implemented
 
@@ -146,7 +151,13 @@ Numerical/process failures have an UNKNOWN safety label. They never count as
 unsafe just to inflate the fraction. A missing Vth crossing is reported as
 `threshold_not_bracketed`, not invented or clipped to the sweep boundary.
 
-## Subsequent BO comparison
+## BO comparison and reproduction
+
+The `bo_comparison` folder contains the optimizer code, a compact tracked report
+and the 300 simulated recipe responses needed to reproduce the study. Raw
+simulation caches and detailed optimizer traces stay local. Start with the
+[report and reproduction commands](bo_comparison/report/README.md) or the
+[code walkthrough](bo_comparison/README.md).
 
 The full dataset is a hidden benchmark oracle, not initial training data for
 both optimizers. If operating on the 100-point finite pool, disclose that finite
@@ -155,7 +166,8 @@ evaluator or explicitly disclose an additional validated surrogate. Do not claim
 that interpolation of 100 rows is exact TCAD. Charge initial seed observations
 equally to both algorithms; a known-safe seed here is model-safe, not a hardware
 safety certification. Domain qualification and dataset construction are separate
-offline costs. SafeOpt also needs GP/kernel/noise/confidence choices later.
+offline costs. The report records the fixed GP/kernel/noise/confidence choices
+used in the completed experiment.
 
 ## Physical limits and validation still needed
 

@@ -69,10 +69,13 @@ def read_dataset(path: Path) -> dict:
     if path.name == "dataset.csv":
         qualification = "Final sample in progress or awaiting benchmark report"
         try:
-            report = json.loads(path.with_name("benchmark_report.json").read_text(encoding="utf-8-sig"))
+            finite = path.with_name("finite_benchmark_report.json")
+            report_path = finite if finite.is_file() else path.with_name("benchmark_report.json")
+            report = json.loads(report_path.read_text(encoding="utf-8-sig"))
+            prefix = "Finite benchmark" if report.get("benchmark_type") == "finite_candidate_pool" else "Benchmark"
             if report.get("statistics", {}).get("n") == len(raw) and len(rows) == len(raw):
-                qualification = ("Benchmark accepted" if report.get("accepted") is True
-                                 else "Benchmark did not qualify")
+                qualification = (f"{prefix} accepted" if report.get("accepted") is True
+                                 else f"{prefix} did not qualify")
         except (OSError, ValueError):
             pass
     return {"device": device, "phase": phase, "qualification": qualification,

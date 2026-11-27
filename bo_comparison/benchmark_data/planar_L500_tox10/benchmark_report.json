@@ -1,0 +1,38 @@
+{
+  "device_id": "planar_L500_tox10",
+  "accepted": true,
+  "statistics": {
+    "n": 100,
+    "unsafe": 68,
+    "safe": 32,
+    "unknown": 0,
+    "complete_evaluations": 100,
+    "observed_unsafe_fraction_min": 0.68,
+    "observed_unsafe_fraction_max": 0.68,
+    "unsafe_fraction_lower_one_sided_95": 0.5949174526206139,
+    "unsafe_fraction_upper_one_sided_95": 0.756863742719069
+  },
+  "reason": "PASS",
+  "domain": {
+    "name": "intermediate_dose",
+    "implant_dose_cm2": [
+      300000000000.0,
+      3000000000000.0
+    ],
+    "anneal_time_s": [
+      10,
+      90
+    ],
+    "anneal_temperature_C": [
+      1000,
+      1080
+    ]
+  },
+  "measure": "uniform_log10_dose_linear_time_linear_temperature",
+  "confidence_scope": "95% one-sided per-device, not simultaneous across devices",
+  "cost": {
+    "dataset_recipe_evaluations": 100,
+    "pilot_recipe_evaluations": 72,
+    "note": "One recipe includes one process simulation, bias ramps and a gate sweep. Counts are not primitive PDE solve counts."
+  }
+}
